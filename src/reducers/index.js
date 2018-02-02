@@ -1,5 +1,4 @@
 import {
-  REQUEST_URL,
   FETCH_LIST_FAILURE,
   FETCH_LIST_SUCCESS,
   FETCH_LIST_REQUEST,
@@ -11,7 +10,7 @@ const initialState = {
   currentPath: '', 
   list: [],
   isLoading: false,
-  token: '',
+  token: null,
 };
 
 const reducer = (state = initialState, action) => {

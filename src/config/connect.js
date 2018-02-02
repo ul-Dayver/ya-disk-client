@@ -14,9 +14,8 @@ import {
 function mergeProps (stateProps, dispatchProps, routesProps) {
 	const { dispatch } = dispatchProps
   return Object.assign({},stateProps, routesProps, {
-	  Login: function (token) {
-			dispatch(setToken(token))
-	  }
+	  Login: (token) => dispatch(setToken(token)),
+		fetchList: (path) => dispatch(fetchList(path)),
   })
 }
 

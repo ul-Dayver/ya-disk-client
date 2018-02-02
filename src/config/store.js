@@ -4,7 +4,7 @@ import reducer from '../reducers'
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 
 const store = createStore(
-  combineReducers({reducer}),
+  combineReducers({app: reducer}),
   applyMiddleware(thunkMiddleware)
 )
 

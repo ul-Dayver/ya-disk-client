@@ -1,5 +1,5 @@
-export const BASE_PATH = ''//process.env.NODE_ENV == 'production' ? '' : '/api';
 export const REQUEST_URL = 'https://cloud-api.yandex.net:443/v1/disk/resources?path=';
+export const AUTH_URL = 'https://oauth.yandex.ru/authorize?response_type=token&client_id=50433fd1f31d46a0b09e35eff394244b';
 
 export const FETCH_LIST_REQUEST = 'FETCH_LIST_REQUEST';
 export const FETCH_LIST_SUCCESS = 'FETCH_LIST_SUCCESS';
