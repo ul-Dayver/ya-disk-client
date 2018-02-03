@@ -1,21 +1,26 @@
 import { connect } from 'react-redux'
 import {
-	partialCopyObj,
-	setToken,
-	resetToken,
-	fetchListRequest,
-	fetchListSuccess,
-	fetchListFailure,
-	fetchList
+  setToken,
+  resetToken,
+  fetchList,
+  uploadFile,
+  downloadFile,
+  createDir,
+  deleteDir
 } from '../actions';
-//import ServerRequest, {RESTful} from '../components/serverRequest'
-
 
 function mergeProps (stateProps, dispatchProps, routesProps) {
-	const { dispatch } = dispatchProps
+  const { dispatch } = dispatchProps
+  const { pathname } = routesProps.location
+
   return Object.assign({},stateProps, routesProps, {
-	  Login: (token) => dispatch(setToken(token)),
-		fetchList: (path) => dispatch(fetchList(path)),
+	Login: (token) => dispatch(setToken(token)),
+	Logout: () => dispatch(resetToken()),
+	fetchList: (path) => dispatch(fetchList('disk:' + path)),
+	createDir: (path) => dispatch(createDir(path, 'disk:' + pathname)),
+	deleteDir: (path) => dispatch(deleteDir(path, 'disk:' + pathname)),
+	uploadFile: (path, formData) => dispatch(uploadFile(path, formData, 'disk:' + pathname)),
+	downloadFile: (path, name) => dispatch(downloadFile(path, name))
   })
 }
 
