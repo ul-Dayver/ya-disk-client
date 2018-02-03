@@ -11,6 +11,16 @@ const storageAvailable = (type) => {
   }
 };
 
+export const delTokenToStorage = () => {
+  if (storageAvailable('localStorage')) {
+    localStorage.removeItem('token');
+    return true;
+  }
+  else {
+    return false;
+  }
+};
+
 export const saveTokenToStorage = (token) => {
   if (storageAvailable('localStorage')) {
     localStorage.setItem('token', token);

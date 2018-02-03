@@ -1,7 +1,8 @@
 import React from 'react'
-import {Route} from 'react-router-dom'
-import { saveTokenToStorage, getTokenFromStorage } from '../localStorage';
+import {Route, Redirect, Switch} from 'react-router-dom'
+import { saveTokenToStorage, getTokenFromStorage, delTokenToStorage} from '../localStorage';
 
+import Layout from '../views/layout';
 import ManagerView from '../views/manager';
 import LoginView from '../views/login';
 
@@ -31,13 +32,23 @@ class App extends React.Component {
     return !!this.props.app.token;
   }
 
+  logout() {
+    delTokenToStorage()
+    this.props.Logout()
+  }
+
   render () {
     return (
-      <Route render={
-        (navigation) => this.isAuth()
-        ? <ManagerView {...this.props} {...navigation}/>
-        : <LoginView />
-      } />
+      <Layout>
+        <Switch>
+          <Redirect from='/token' to='/'/>
+          <Route render={
+            (navigation) => this.isAuth()
+            ? <ManagerView onLogout={this.logout.bind(this)} {...this.props} {...navigation}/>
+            : <LoginView />
+          } />
+        </Switch>
+      </Layout>
     )
   }
 }
