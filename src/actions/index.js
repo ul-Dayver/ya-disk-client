@@ -136,9 +136,38 @@ export function createDir(path, currentPath) {
   }
 }
 
+function asyncOperation(dispatch, getState, currentPath, jsonData) {
+  return fetch(jsonData.href, {
+    headers: new Headers({ 'Authorization' : `OAuth ${getState().app.token}` }),
+    method: jsonData.method
+  })
+  .then(response => response.json())
+  .then((json) => {
+      switch (json.status) {
+        case 'in-progress':
+          return asyncOperation(dispatch, getState, currentPath, jsonData)
+        case 'success':
+          return dispatch(fetchList(currentPath))
+        default:
+          console.log(jsonData, json)
+          return dispatch(requestFailure())
+      }
+    }
+  )
+  .catch(function(error) { 
+    console.log(error) 
+    dispatch(requestFailure())
+  })
+}
+
 export function deleteDir(path, currentPath) {
   return (dispatch, getState) => {
-    return Request(dispatch, getState, '?path=' + encodeURIComponent(path) + '&force_async=false&permanently=false', 'DELETE')
-      .then(() => dispatch(fetchList(currentPath)))
+    return Request(dispatch, getState, '?path=' + encodeURIComponent(path) + '&force_async=true&permanently=false', 'DELETE')
+      .then(response => response.json())
+      .then((json) => {
+          dispatch(startRequest())
+          return asyncOperation(dispatch, getState, currentPath, json)
+        }
+      )
   }
 }
