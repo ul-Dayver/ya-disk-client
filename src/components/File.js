@@ -12,9 +12,9 @@ const formatBytes = (bytes, decimals) => {
 export default class File extends Component {
   render() {
     return (
-      <li className='file list-group-item'>
+      <li className='list-group-item'>
         <span className="glyphicon glyphicon-file"></span>
-        <span>{this.props.item.name}</span>
+        <span className="btn btn-link" onClick={() => this.props.onClick(this.props.item)}>{this.props.item.name}</span>
         <span className='badge'>{formatBytes(this.props.item.size)}</span>
       </li>
     )
