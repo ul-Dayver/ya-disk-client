@@ -6,6 +6,8 @@ import Layout from '../views/layout';
 import ManagerView from '../views/manager';
 import LoginView from '../views/login';
 
+import {AUTH_CALLBACK_URL} from '../constants'
+
 class App extends React.Component {
   componentDidMount() {
     if (!this.isAuth()) {
@@ -41,7 +43,7 @@ class App extends React.Component {
     return (
       <Layout>
         <Switch>
-          <Redirect from='/token' to='/'/>
+          <Redirect from={AUTH_CALLBACK_URL} to='/'/>
           <Route render={
             (navigation) => this.isAuth()
             ? <ManagerView onLogout={this.logout.bind(this)} {...this.props} {...navigation}/>
